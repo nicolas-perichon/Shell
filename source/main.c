@@ -1,8 +1,14 @@
 //
-// Created by arthur on 14/11/2020.
+// Projet Shell - Created on 14/11/2020.
 //
-#include <stdio.h>
 
-int main(){
-    printf("Bonjour");
+#include "../header/shell.h"
+
+/**
+ * \brief Main
+ * @return  0
+ */
+int main() {
+    runShell();
+    return 0;
 }
