@@ -23,14 +23,33 @@ char *prePrintShell() {
 }
 
 /**
+ * \brief Parse la commande et appelle le bon builtin
+ * @param cmd : commande en input
+ */
+char parseCmd(char *cmd) {
+    char *builtin;
+    builtin = strtok(cmd, " ");
+    // if builtin == "ls" -> run builtinLs(params=token);
+    // ...
+
+}
+
+/**
  * \brief Fonction principale du Shell en charge du prompt, de l'appel du traitement syntaxique et de l'appel des builtins
  */
 _Noreturn void runShell() {
 
     while (1) {
-        write(0, prePrintShell(), strlen(prePrintShell()));
-        char *cmd = malloc(sizeof(cmd));
-        read(1, cmd, sizeof(cmd));
-        printf(cmd);
+        char *entre = NULL;
+        fwrite(prePrintShell(), strlen(prePrintShell()),1, stdout);
+        char * cmd = (char*)malloc(256* sizeof(char));
+
+        if (fgets(cmd, strlen(cmd), stdin) != NULL) {
+            entre = strchr(cmd, '\n');
+            *entre = '\0';
+        }
+
+        parseCmd(cmd);
+
     }
 }
