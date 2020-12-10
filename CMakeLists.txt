@@ -5,4 +5,4 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(Shell
         LICENSE
-        README.md source/main.c source/shell.c header/shell.h)
+        README.md source/main.c source/shell.c header/shell.h source/arg_list.c header/arg_list.h)

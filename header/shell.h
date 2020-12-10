@@ -7,5 +7,6 @@
 
 extern void runShell();
 extern char *prePrintShell();
+extern void parseCmd();
 
 #endif

@@ -6,10 +6,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
 #include "../header/shell.h"
+#include "../header/arg_list.h"
+
 
 /**
- * \brief Fonction qui récupère l'hostname et le login de l'utilisateur courant afin de formater le prompt
+ * \brief Récupère l'hostname et le login de l'utilisateur courant afin de formater le prompt
  * @return une chaine de caractère servant a l'affichage du prompt
  */
 char *prePrintShell() {
@@ -24,32 +27,75 @@ char *prePrintShell() {
 
 /**
  * \brief Parse la commande et appelle le bon builtin
- * @param cmd : commande en input
+ * \param cmd : commande en input
  */
-char parseCmd(char *cmd) {
+void parseCmd(char *cmd) {
     char *builtin;
     builtin = strtok(cmd, " ");
-    // if builtin == "ls" -> run builtinLs(params=token);
-    // ...
 
+    Liste *maListe = initialisation();
+
+    while(builtin != NULL) {
+        insertion(maListe, builtin);
+        builtin = strtok(NULL, " ");
+    }
+    int size = getSizeList(maListe);
+
+    char *builtin_name = searchELementByIndex(maListe, size-1);
+
+    if (strcmp(builtin_name, "ls") == 0) {
+        printf("Lancement du builtin ls\n");
+        // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "echo") == 0) {
+        printf("Lancement du builtin echo\n");
+        // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "touch") == 0) {
+        printf("Lancement du builtin touch\n");
+        // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "rm") == 0) {
+        printf("Lancement du builtin rm\n");
+        // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "mv") == 0) {
+        printf("Lancement du builtin mv\n");
+        // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "cat") == 0) {
+        printf("Lancement du builtin cat\n");
+        // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "pwd") == 0) {
+        printf("Lancement du builtin pwd\n");
+        // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "cd") == 0) {
+        printf("Lancement du builtin cd\n");
+        // execLs(maListe);
+    } else {
+        printf("\033[1;31mINFO Erreur : Commande \"%s\" non reconnue\033[0m \n", builtin_name);
+        printf("\033[1;31mEssayer avec les commandes suivantes : echo, cat, cd, pwd, ls, touch, rm, mv\033[0m\n");
+    }
 }
 
+
 /**
- * \brief Fonction principale du Shell en charge du prompt, de l'appel du traitement syntaxique et de l'appel des builtins
+ * \brief Lancement du shell
  */
 _Noreturn void runShell() {
 
     while (1) {
         char *entre = NULL;
         fwrite(prePrintShell(), strlen(prePrintShell()),1, stdout);
-        char * cmd = (char*)malloc(256* sizeof(char));
 
-        if (fgets(cmd, strlen(cmd), stdin) != NULL) {
+        char * cmd = malloc(256 * sizeof(char));
+
+        if (fgets(cmd, 256, stdin) != NULL) {
             entre = strchr(cmd, '\n');
             *entre = '\0';
         }
-
         parseCmd(cmd);
-
     }
 }
