@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 #include "../header/shell.h"
 #include "../header/arg_list.h"
+#include "../header/builtin_echo.h"
 
 
 /**
@@ -48,8 +49,7 @@ void parseCmd(char *cmd) {
         // execLs(maListe);
     }
     else if (strcmp(builtin_name, "echo") == 0) {
-        printf("Lancement du builtin echo\n");
-        // execLs(maListe);
+        exec_builtin_echo(maListe);
     }
     else if (strcmp(builtin_name, "touch") == 0) {
         printf("Lancement du builtin touch\n");
