@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
 #include "../header/shell.h"
 #include "../header/arg_list.h"
 #include "../header/builtin_ls.h"
@@ -14,6 +13,7 @@
 #include "../header/builtin_cat.h"
 #include "../header/builtin_env.h"
 #include "../header/builtin_pwd.h"
+#include "../header/builtin_cd.h"
 
 
 
@@ -24,6 +24,8 @@
 char *prePrintShell() {
     char login[1024];
     char machine[1024];
+
+    // Ajoute de la couleur pour différence le prompt
     char prompt[1014] = "\033[1;33m";
 
     getlogin_r(login, sizeof(login));
@@ -37,6 +39,8 @@ char *prePrintShell() {
  */
 void parseCmd(char *cmd) {
     char *builtin;
+
+    // Extrait les tokens de cmd avec le séparateur space
     builtin = strtok(cmd, " ");
 
     Liste *maListe = initialisation();
@@ -72,17 +76,15 @@ void parseCmd(char *cmd) {
     }
     else if (strcmp(builtin_name, "pwd") == 0) {
         exec_builtin_pwd();
-        // execLs(maListe);
     }
     else if (strcmp(builtin_name, "cd") == 0) {
-        printf("Lancement du builtin cd\n");
-        // execLs(maListe);
+        exec_builtin_cd(maListe);
     }
     else if (strcmp(builtin_name, "env") == 0) {
         exec_builtin_env();
     } else {
-        printf("\033[1;31mINFO Erreur : Commande \"%s\" non reconnue\033[0m \n", builtin_name);
-        printf("\033[1;31mEssayer avec les commandes suivantes : echo, cat, cd, pwd, ls, touch, rm, mv\033[0m\n");
+        printf("\033[1;31mINFO %s : Commande introuvable\033[0m \n", builtin_name);
+        printf("\033[1;31mEssayer avec les commandes suivantes : echo, cat, cd, pwd, ls, touch, rm, mv, env\033[0m\n");
     }
 }
 

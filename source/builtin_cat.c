@@ -14,8 +14,6 @@
  * \brief Exec du builtin cat avec execv
  */
 void exec_builtin_cat(Liste *liste) {
-    int size = getSizeList(liste);
-
     int state;
 
     pid_t process_id;
