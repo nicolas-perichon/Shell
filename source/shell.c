@@ -11,6 +11,7 @@
 #include "../header/arg_list.h"
 #include "../header/builtin_ls.h"
 #include "../header/builtin_echo.h"
+#include "../header/builtin_cat.h"
 
 
 
@@ -65,7 +66,7 @@ void parseCmd(char *cmd) {
         // execLs(maListe);
     }
     else if (strcmp(builtin_name, "cat") == 0) {
-        printf("Lancement du builtin cat\n");
+        exec_builtin_cat(maListe);
         // execLs(maListe);
     }
     else if (strcmp(builtin_name, "pwd") == 0) {
@@ -97,7 +98,8 @@ _Noreturn void runShell() {
             entre = strchr(cmd, '\n');
             *entre = '\0';
         }
-
-        parseCmd(cmd);
+        if(strlen(cmd) > 0) {
+            parseCmd(cmd);
+        }
     }
 }
