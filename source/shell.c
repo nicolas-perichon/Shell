@@ -12,6 +12,7 @@
 #include "../header/builtin_ls.h"
 #include "../header/builtin_echo.h"
 #include "../header/builtin_cat.h"
+#include "../header/builtin_env.h"
 
 
 
@@ -67,7 +68,6 @@ void parseCmd(char *cmd) {
     }
     else if (strcmp(builtin_name, "cat") == 0) {
         exec_builtin_cat(maListe);
-        // execLs(maListe);
     }
     else if (strcmp(builtin_name, "pwd") == 0) {
         printf("Lancement du builtin pwd\n");
@@ -76,6 +76,9 @@ void parseCmd(char *cmd) {
     else if (strcmp(builtin_name, "cd") == 0) {
         printf("Lancement du builtin cd\n");
         // execLs(maListe);
+    }
+    else if (strcmp(builtin_name, "env") == 0) {
+        exec_builtin_env();
     } else {
         printf("\033[1;31mINFO Erreur : Commande \"%s\" non reconnue\033[0m \n", builtin_name);
         printf("\033[1;31mEssayer avec les commandes suivantes : echo, cat, cd, pwd, ls, touch, rm, mv\033[0m\n");
