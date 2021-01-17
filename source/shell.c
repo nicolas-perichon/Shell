@@ -9,7 +9,9 @@
 #include <sys/wait.h>
 #include "../header/shell.h"
 #include "../header/arg_list.h"
+#include "../header/builtin_ls.h"
 #include "../header/builtin_echo.h"
+
 
 
 /**
@@ -45,8 +47,7 @@ void parseCmd(char *cmd) {
     char *builtin_name = searchELementByIndex(maListe, size-1);
 
     if (strcmp(builtin_name, "ls") == 0) {
-        printf("Lancement du builtin ls\n");
-        // execLs(maListe);
+        exec_builtin_ls();
     }
     else if (strcmp(builtin_name, "echo") == 0) {
         exec_builtin_echo(maListe);
@@ -96,6 +97,7 @@ _Noreturn void runShell() {
             entre = strchr(cmd, '\n');
             *entre = '\0';
         }
+
         parseCmd(cmd);
     }
 }
