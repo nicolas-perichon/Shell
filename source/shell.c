@@ -13,6 +13,7 @@
 #include "../header/builtin_echo.h"
 #include "../header/builtin_cat.h"
 #include "../header/builtin_env.h"
+#include "../header/builtin_pwd.h"
 
 
 
@@ -70,7 +71,7 @@ void parseCmd(char *cmd) {
         exec_builtin_cat(maListe);
     }
     else if (strcmp(builtin_name, "pwd") == 0) {
-        printf("Lancement du builtin pwd\n");
+        exec_builtin_pwd();
         // execLs(maListe);
     }
     else if (strcmp(builtin_name, "cd") == 0) {
@@ -101,6 +102,7 @@ _Noreturn void runShell() {
             entre = strchr(cmd, '\n');
             *entre = '\0';
         }
+
         if(strlen(cmd) > 0) {
             parseCmd(cmd);
         }
