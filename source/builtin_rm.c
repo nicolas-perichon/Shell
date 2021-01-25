@@ -28,9 +28,7 @@ void exec_builtin_rm(Liste *liste) {
         exit(0);
     } else {
         if (waitpid(process_id, &state, 0) > 0) {
-            if (WIFEXITED((state) && WEXITSTATUS(state))) {
-                return;
-            }
+            return;
         }
     }
 }
