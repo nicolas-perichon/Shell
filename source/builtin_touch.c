@@ -11,7 +11,7 @@
 #include "../header/builtin_touch.h"
 
 /**
- * \brief Exec du builtin cat avec execv
+ * \brief Exec du builtin touch avec execv
  */
 void exec_builtin_touch(Liste *liste) {
     int state;

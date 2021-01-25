@@ -16,6 +16,7 @@
 #include "../header/builtin_cd.h"
 #include "../header/builtin_touch.h"
 #include "../header/builtin_rm.h"
+#include "../header/builtin_mv.h"
 
 
 /**
@@ -67,8 +68,7 @@ void parseCmd(char *cmd) {
         exec_builtin_rm(maListe);
     }
     else if (strcmp(builtin_name, "mv") == 0) {
-        printf("Lancement du builtin mv\n");
-        // execLs(maListe);
+        exec_builtin_mv(maListe);
     }
     else if (strcmp(builtin_name, "cat") == 0) {
         exec_builtin_cat(maListe);
