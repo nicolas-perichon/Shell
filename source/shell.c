@@ -14,6 +14,7 @@
 #include "../header/builtin_env.h"
 #include "../header/builtin_pwd.h"
 #include "../header/builtin_cd.h"
+#include "../header/builtin_touch.h"
 
 
 
@@ -60,8 +61,7 @@ void parseCmd(char *cmd) {
         exec_builtin_echo(maListe);
     }
     else if (strcmp(builtin_name, "touch") == 0) {
-        printf("Lancement du builtin touch\n");
-        // execLs(maListe);
+        exec_builtin_touch(maListe);
     }
     else if (strcmp(builtin_name, "rm") == 0) {
         printf("Lancement du builtin rm\n");
