@@ -34,7 +34,8 @@ void exec_builtin_cat(Liste *liste) {
         {
             fread(buffer, s, 1, fd);
 
-            printf("%s\n", buffer);
+            printf("%s", buffer);
+            printf("\n");
 
             // Fermeture du fichier
             fclose(fd);

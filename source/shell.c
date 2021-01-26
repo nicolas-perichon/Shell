@@ -17,6 +17,7 @@
 #include "../header/builtin_touch.h"
 #include "../header/builtin_rm.h"
 #include "../header/builtin_mv.h"
+#include "../header/cmd_sys.h"
 
 
 /**
@@ -81,9 +82,9 @@ void parseCmd(char *cmd) {
     }
     else if (strcmp(builtin_name, "env") == 0) {
         exec_builtin_env(maListe);
-    } else {
-        printf("\033[1;31mINFO %s : Commande introuvable\033[0m \n", builtin_name);
-        printf("\033[1;31mEssayer avec les commandes suivantes : echo, cat, cd, pwd, ls, touch, rm, mv, env\033[0m\n");
+    }
+    else {
+        exec_cmd_sys(maListe);
     }
 }
 

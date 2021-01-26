@@ -16,5 +16,4 @@ void exec_builtin_rm(Liste *liste) {
     if(rd != 0) {
         printf("Le fichier n'a pas pu être supprimé");
     }
-
 }
