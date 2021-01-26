@@ -3,33 +3,27 @@
 //
 
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
-
+#include <dirent.h>
 #include "../header/builtin_ls.h"
 
 /**
- * \brief Exec du builtin ls avec execv
+ * \brief Builtin ls qui liste les fichiers et sous répertoires du répertoire courant
  */
 void exec_builtin_ls() {
-    int state;
+    // Instanciation de la structure des répertoires
+    struct dirent *de;
 
-    pid_t process_id;
-    process_id = fork();
+    // Ouverture du répertoire courant
+    DIR *dr = opendir(".");
 
-    if (process_id == -1) {
-        printf("can't fork");
-    } else if (process_id == 0) {
-        char *argv_list[] = {"ls", NULL};
-        execv("/bin/ls", argv_list);
-        printf("\n");
-        exit(0);
-    } else {
-        if (waitpid(process_id, &state, 0) > 0) {
-            return;
-        }
+    // Parcours des fichiers et sous répertoires
+    while ((de = readdir(dr)) != NULL) {
+        printf("%s   ", de->d_name);
     }
 
+    printf("\n");
+
+    // Fermeture du répertoire
+    closedir(dr);
 }

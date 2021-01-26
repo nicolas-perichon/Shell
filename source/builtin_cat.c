@@ -3,32 +3,45 @@
 //
 
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
-
+#include <fcntl.h>
 #include "../header/builtin_cat.h"
 
 /**
- * \brief Exec du builtin cat avec execv
+ * \brief Builtin cat qui affiche le contenu du fichier passé en paramètre
+ * \param liste : Liste chaînée
  */
 void exec_builtin_cat(Liste *liste) {
-    int state;
+    char *buffer;
 
-    pid_t process_id;
-    process_id = fork();
+    // Ouverture du fichier passé en param
+    FILE *fd = fopen(searchELementByIndex(liste, 0), "r");
 
-    if (process_id == -1) {
-        printf("can't fork");
-    } else if (process_id == 0) {
-        char *argv_list[] = {"cat", searchELementByIndex(liste, 0 ), NULL};
-        execv("/bin/cat", argv_list);
-        printf("\n");
-        exit(0);
-    } else {
-        if (waitpid(process_id, &state, 0) > 0) {
-            return;
+    if ( fd != NULL )
+    {
+        // Placement du descripteur de fichier en fin de fichier
+        fseek(fd, 0L, SEEK_END);
+
+        // Récuperation de la taille du fichier
+        long s = ftell(fd);
+
+        // Replacement du descripteur au début du fichier
+        rewind(fd);
+
+        buffer = malloc(s);
+        if ( buffer != NULL )
+        {
+            fread(buffer, s, 1, fd);
+
+            printf("%s\n", buffer);
+
+            // Fermeture du fichier
+            fclose(fd);
+
+            // Libère l'espace pris par le buffer pour éviter les fuites mémoires
+            free(buffer);
         }
     }
+
 }

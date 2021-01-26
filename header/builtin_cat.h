@@ -7,6 +7,6 @@
 
 #include "arg_list.h"
 
-extern void exec_builtin_cat();
+extern void exec_builtin_cat(Liste *liste);
 
 #endif //SHELL_BUILTIN_CAT_H

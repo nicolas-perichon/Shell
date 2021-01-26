@@ -6,8 +6,10 @@
 #include "../header/builtin_cd.h"
 
 /**
- * \brief Exec du builtin cd
+ * \brief Builtin cd pour changer le répertoire courant
+ * \param liste : Liste chaînée
  */
 void exec_builtin_cd(Liste *liste) {
+    /* Changement du répertoire de travail */
     chdir(searchELementByIndex(liste, 0 ));
 }

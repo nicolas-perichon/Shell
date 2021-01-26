@@ -3,32 +3,22 @@
 //
 
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
-
 #include "../header/builtin_touch.h"
 
 /**
- * \brief Exec du builtin touch avec execv
+ * \brief Exec du builtin touch
+ * \param liste : Liste chaînée
  */
 void exec_builtin_touch(Liste *liste) {
-    int state;
+    /* Création du fichier */
+    FILE *fd =fopen(searchELementByIndex(liste, 0),"w");
 
-    pid_t process_id;
-    process_id = fork();
-
-    if (process_id == -1) {
-        printf("can't fork");
-    } else if (process_id == 0) {
-        char *argv_list[] = {"touch", searchELementByIndex(liste, 0 ), NULL};
-        execv("/bin/touch", argv_list);
-        printf("\n");
-        exit(0);
-    } else {
-        if (waitpid(process_id, &state, 0) > 0) {
-            return;
-        }
+    if (fd != NULL) {
+        /* Fermeture du fichier */
+        fclose(fd);
+    }
+    else {
+        printf("Le fichier n'a pas été créé");
     }
 }

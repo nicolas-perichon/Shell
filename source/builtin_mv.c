@@ -3,32 +3,17 @@
 //
 
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
-
 #include "../header/builtin_mv.h"
 
 /**
  * \brief Exec du builtin mv avec execv
+ * \param liste : Liste chaînée
  */
 void exec_builtin_mv(Liste *liste) {
-    int state;
+    /* Renomme ou déplace le fichier */
+    int is_renamed = rename(searchELementByIndex(liste,1), searchELementByIndex(liste,0));
 
-    pid_t process_id;
-    process_id = fork();
-
-    if (process_id == -1) {
-        printf("can't fork");
-    } else if (process_id == 0) {
-        char *argv_list[] = {"mv", searchELementByIndex(liste, 1 ), searchELementByIndex(liste, 0), NULL};
-        execv("/bin/mv", argv_list);
-        printf("\n");
-        exit(0);
-    } else {
-        if (waitpid(process_id, &state, 0) > 0) {
-            return;
-        }
+    if (is_renamed != 0) {
+        printf("Le fichier n'a pas été renommé et/ou déplacé");
     }
 }

@@ -6,11 +6,11 @@
 #include "../header/builtin_echo.h"
 
 /**
- * \brief Lancement du builtin_echo
+ * \brief Builtin echo qui re prompt les arguments passés paramètres
  * \param liste : Liste chaînée
  */
 void exec_builtin_echo(Liste *liste) {
-
+    // Prompt les éléments de la liste autre que la cmd (echo)
     for (int i = getSizeList(liste) - 2; i >= 0; i--) {
         printf("%s ", searchELementByIndex(liste, i));
     }

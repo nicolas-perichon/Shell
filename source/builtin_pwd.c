@@ -4,17 +4,17 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
-
-#include "../header/builtin_env.h"
+#include "../header/builtin_pwd.h"
 
 /**
  * \brief Exec du builtin pwd
+ * \param liste : Liste chaînée
  */
 void exec_builtin_pwd() {
     char working_directory[1024];
+
+    /* Récuperation du répertoire de travail courant */
     getcwd(working_directory, sizeof(working_directory));
+
     printf("%s\n", working_directory);
 }

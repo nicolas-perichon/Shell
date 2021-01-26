@@ -7,6 +7,6 @@
 
 #include "arg_list.h"
 
-extern void exec_builtin_cd();
+extern void exec_builtin_cd(Liste *liste);
 
 #endif //SHELL_BUILTIN_CD_H

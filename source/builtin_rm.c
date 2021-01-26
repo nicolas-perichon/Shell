@@ -3,32 +3,18 @@
 //
 
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
-
 #include "../header/builtin_rm.h"
 
 /**
- * \brief Exec du builtin rm avec execv
+ * \brief Exec du builtin rm
+ * \param liste : Liste chaînée
  */
 void exec_builtin_rm(Liste *liste) {
-    int state;
+    /* Suppression du fichier */
+    int rd = remove(searchELementByIndex(liste, 0));
 
-    pid_t process_id;
-    process_id = fork();
-
-    if (process_id == -1) {
-        printf("can't fork");
-    } else if (process_id == 0) {
-        char *argv_list[] = {"rm", searchELementByIndex(liste, 0 ), NULL};
-        execv("/bin/rm", argv_list);
-        printf("\n");
-        exit(0);
-    } else {
-        if (waitpid(process_id, &state, 0) > 0) {
-            return;
-        }
+    if(rd != 0) {
+        printf("Le fichier n'a pas pu être supprimé");
     }
+
 }
